@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7569494091814874421}
   - component: {fileID: 7569494091814874425}
   - component: {fileID: 7778994216946632233}
+  - component: {fileID: 2495485732889445533}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -154,7 +155,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.7
+  m_Time: 0.78
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -163,13 +164,13 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.03
-        inSlope: -0.06307278
-        outSlope: -0.06307278
+        value: 0.02856949
+        inSlope: -0.05632321
+        outSlope: -0.05632321
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 0.29444444
+        outWeight: 0.5833333
       - serializedVersion: 3
         time: 1
         value: 0
@@ -220,3 +221,16 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &2495485732889445533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7569494091814874418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b76b454e0153f4640902b447883ef097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HitEffect: {fileID: 1602197966606650, guid: a5aa433121436ef4899e4f2254a1d4d3, type: 3}
