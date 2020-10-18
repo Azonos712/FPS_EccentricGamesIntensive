@@ -10,6 +10,7 @@ public class Gun : MonoBehaviour
     public int BulletSpeed = 80;
     public float Timer;
     public float ShotPeriod = 0.2f;
+    public Animation anim;
 
     public GameObject Flash;
 
@@ -24,9 +25,10 @@ public class Gun : MonoBehaviour
                 {
                     Timer = 0f;
                     Bullets = Bullets - 1;
-                    GameObject newBullet = Instantiate(BulletPrefab, SpawnPoint.transform.position, SpawnPoint.transform.rotation);
+                    GameObject newBullet = Instantiate(BulletPrefab, SpawnPoint.transform.position, Quaternion.Euler(90, 0, 0));
                     newBullet.GetComponent<Rigidbody>().velocity = SpawnPoint.transform.forward * BulletSpeed;
                     Flash.SetActive(true);
+                    anim.Play();
                     Invoke("HideFlash", 0.1f);
                 }
             }
