@@ -16,13 +16,13 @@ namespace Eccentric {
 
         void Update() {
 
-            if (Input.GetMouseButton(1)) {
+            //if (Input.GetMouseButton(1)) {
                 _xRoation -= Input.GetAxis("Mouse Y") * RotationSencitivity;
                 _xRoation = Mathf.Clamp(_xRoation, -70f, 70f);
 
                 CameraTransform.localEulerAngles = new Vector3(_xRoation, 0f, 0f);
                 transform.Rotate(0, Input.GetAxis("Mouse X") * RotationSencitivity, 0);
-            }
+            //}
 
             if (Input.GetKeyDown(KeyCode.Space)) {
                 if (_grounded) {
@@ -52,9 +52,6 @@ namespace Eccentric {
                 }
             }
         }
-
-
     }
-
 }
 
