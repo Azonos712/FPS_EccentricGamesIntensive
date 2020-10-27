@@ -1,45 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int Health;
+    private int _health = 5;
     public GameObject LoseObject;
     public GameObject HitObject;
 
     public delegate void EventHealth(int health);
-    public event EventHealth OnHealth;
+    public event EventHealth OnUIHealth;
 
-    private void Start()
-    {
-        OnHealth?.Invoke(Health);
-    }
+    private void Start() { OnUIHealth?.Invoke(_health); }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "EnemyFoot")
-        {
-            Health = Health - 1;
-            if (Health <= 0)
-            {
-                Time.timeScale = 0.2f;
-                Time.fixedDeltaTime = 0.02f * 0.2f;
-                LoseObject.SetActive(true);
-            }
-            else
-            {
-                HitObject.SetActive(true);
-            }
-            OnHealth?.Invoke(Health);
-
-            Invoke("SetHitUIFalse", 0.15f);
-        }
+            TakeDamage();
     }
 
-    void SetHitUIFalse()
+    public void TakeDamage()
     {
-        HitObject.SetActive(false);
+        _health = _health - 1;
+        if (_health <= 0)
+        {
+            Time.timeScale = 0.2f;
+            Time.fixedDeltaTime = 0.02f * 0.2f;
+            LoseObject.SetActive(true);
+        }
+        else
+        {
+            HitObject.SetActive(true);
+        }
+
+        OnUIHealth?.Invoke(_health);
+        Invoke("SetHitUIFalse", 0.15f);
     }
+
+    void SetHitUIFalse() { HitObject.SetActive(false); }
 }

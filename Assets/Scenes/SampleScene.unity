@@ -16218,8 +16218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12ddba8a3457ac24cb3848fcee0d06ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 2051939274}
-  text: {fileID: 1220974155}
+  Gun: {fileID: 2051939274}
+  Text: {fileID: 1220974155}
 --- !u!1001 &1227693828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23257,8 +23257,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c398fc5728ab6ce429d6ef5bf4688b3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ph: {fileID: 662529779}
-  text: {fileID: 1772678134}
+  PlayerHealth: {fileID: 662529779}
+  Text: {fileID: 1772678134}
 --- !u!1001 &1774410807
 PrefabInstance:
   m_ObjectHideFlags: 0

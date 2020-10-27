@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Eccentric {
+namespace Eccentric
+{
     public class PlayerMove : MonoBehaviour {
 
         public Transform CameraTransform;
@@ -54,4 +53,3 @@ namespace Eccentric {
         }
     }
 }
-

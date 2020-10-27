@@ -1,15 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BodyPart : MonoBehaviour
 {
     public Enemy ThisEnemy;
-    void Start()
-    {
-        GetComponent<Rigidbody>().isKinematic = true;
-    }
-
+    void Start() { GetComponent<Rigidbody>().isKinematic = true; }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Bullet")

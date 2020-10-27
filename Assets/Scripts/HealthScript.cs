@@ -1,20 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthScript : MonoBehaviour
 {
-    public PlayerHealth ph;
-    public Text text;
+    public PlayerHealth PlayerHealth;
+    public Text Text;
 
-    private void Awake()
-    {
-        ph.OnHealth += SetHealth;
-    }
-
-    void SetHealth(int health)
-    {
-        text.text = "Health: " + health;
-    }
+    void Awake() { PlayerHealth.OnUIHealth += ShowHealth; }
+    void ShowHealth(int health) { Text.text = "Health: " + health; }
 }

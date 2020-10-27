@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    public int _health = 8;
     GameObject _player;
-    public Animator EnemyAnimator;
     NavMeshAgent _navMesh;
-    public int Health;
-    public BodyPart[] AllBodyParts;
     bool _takenDmg = false;
     float _timer = 0;
+
+    public Animator EnemyAnimator;
+    public BodyPart[] AllBodyParts;
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
@@ -58,9 +56,9 @@ public class Enemy : MonoBehaviour
             _takenDmg = true;
             EnemyAnimator.SetTrigger("Hit");
         }
-        Health = Health - 1;
+        _health = _health - 1;
 
-        if (Health <= 0)
+        if (_health <= 0)
         {
             _navMesh.enabled = false;
             EnemyAnimator.enabled = false;
@@ -72,7 +70,6 @@ public class Enemy : MonoBehaviour
                 rgbd.isKinematic = false;
                 rgbd.AddForce(0f, 400f, 0f);
                 rgbd.AddForce(-transform.forward * 700f);
-
             }
         }
     }

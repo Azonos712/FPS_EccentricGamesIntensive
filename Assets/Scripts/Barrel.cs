@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Barrel : MonoBehaviour
 {
@@ -15,14 +13,13 @@ public class Barrel : MonoBehaviour
             {
                 if (item.attachedRigidbody)
                 {
-                    if (item.GetComponent<BodyPart>())
-                    {
-                        item.GetComponent<BodyPart>().ThisEnemy.TakeDamage();
-                    }
-                    if (item.attachedRigidbody.GetComponent<PlayerHealth>())
-                    {
-                        item.attachedRigidbody.GetComponent<PlayerHealth>().Health--;
-                    }
+                    var bd = item.GetComponent<BodyPart>();
+                    if (bd)
+                        bd.ThisEnemy.TakeDamage();
+
+                    var ph = item.attachedRigidbody.GetComponent<PlayerHealth>();
+                    if (ph)
+                        ph.TakeDamage();
 
                     Vector3 direction = (item.transform.position - transform.position).normalized;
                     item.attachedRigidbody.AddForce(direction * 1000f);

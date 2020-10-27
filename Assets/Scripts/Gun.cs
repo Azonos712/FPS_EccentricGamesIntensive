@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    public int Bullets;
+    int _bullets = 30;
     public GameObject BulletPrefab;
     public GameObject SpawnPoint;
     public GameObject CartridgePrefab;
@@ -15,6 +13,7 @@ public class Gun : MonoBehaviour
     public Animation anim;
 
     public GameObject Flash;
+
     private AudioSource _audioSource;
     public AudioSource _emptyAudioSource;
 
@@ -23,75 +22,88 @@ public class Gun : MonoBehaviour
     public Camera ThisCamera;
 
     public delegate void MyShoot(int ammo);
-    public event MyShoot OnShoot;
+    public event MyShoot OnUIShoot;
+
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
-        OnShoot?.Invoke(Bullets);
+        OnUIShoot?.Invoke(_bullets);
     }
 
     void Update()
     {
         if (Input.GetMouseButton(1))
-        {
-            ThisCamera.fieldOfView = Mathf.Clamp(ThisCamera.fieldOfView - Time.deltaTime * 80f, 60f, 80f);// 60f + Time.deltaTime;
-            transform.localPosition = Vector3.Lerp(transform.localPosition, AimPosition, Time.deltaTime * 10f);
-        }
+            ZoomCamera(-Time.deltaTime * 80f, AimPosition);
         else
-        {
-            ThisCamera.fieldOfView = Mathf.Clamp(ThisCamera.fieldOfView + Time.deltaTime * 80f, 60f, 80f); //80f - Time.deltaTime;
-            transform.localPosition = Vector3.Lerp(transform.localPosition, StartPosition, Time.deltaTime * 10f);
-        }
+            ZoomCamera(Time.deltaTime * 80f, StartPosition);
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
         {
             Timer = Timer + Time.deltaTime;
-            if (Bullets > 0)
+            if (Timer > ShotPeriod)
             {
-                if (Timer > ShotPeriod)
+                if (_bullets > 0)
                 {
-                    OnShoot?.Invoke(Bullets);
-                    Timer = 0f;
-                    Bullets = Bullets - 1;
+                    _bullets = _bullets - 1;
 
-                    var tSP = SpawnPoint.transform;
-                    GameObject newBullet = Instantiate(BulletPrefab, tSP.position, tSP.rotation * Quaternion.Euler(90, 0, 0));
-                    newBullet.GetComponent<Rigidbody>().velocity = SpawnPoint.transform.forward * BulletSpeed;
+                    SpawnBullet();
 
-                    var tSCP = SpawnCartridgePoint.transform;
-                    GameObject newCartridge = Instantiate(CartridgePrefab, tSCP.position, tSCP.rotation * Quaternion.Euler(Random.Range(80, 100), 0, 0));
-                    newCartridge.GetComponent<Rigidbody>().velocity = SpawnPoint.transform.right * Random.Range(0.9f, 1.1f);
+                    SpawnCartridge();
 
-                    _audioSource.pitch = Random.Range(0.8f, 1.2f);
-                    _audioSource.Play();
+                    PlayShotSound();
 
                     Flash.SetActive(true);
                     anim.Play();
                     Invoke("HideFlash", 0.1f);
                 }
-            }
-            else
-            {
-                if (Timer > ShotPeriod)
+                else
                 {
-                    Timer = 0f;
-                    _emptyAudioSource.pitch = Random.Range(0.8f, 1.2f);
-                    _emptyAudioSource.Play();
-                    Debug.Log("Нет пуль!!!");
-                    OnShoot?.Invoke(0);
+                    PlayEmptyShotSound();
                 }
+
+                OnUIShoot?.Invoke(_bullets);
+                Timer = 0f;
             }
         }
     }
 
-    public void AddAmmo(int ammo)
+    void ZoomCamera(float fieldOfView, Vector3 point)
     {
-        Bullets += ammo;
-        OnShoot?.Invoke(Bullets);
+        ThisCamera.fieldOfView = Mathf.Clamp(ThisCamera.fieldOfView + fieldOfView, 60f, 80f);
+        transform.localPosition = Vector3.Lerp(transform.localPosition, point, Time.deltaTime * 10f);
     }
 
-    public void HideFlash()
+    void SpawnBullet()
     {
-        Flash.SetActive(false);
+        var tSP = SpawnPoint.transform;
+        GameObject newBullet = Instantiate(BulletPrefab, tSP.position, tSP.rotation * Quaternion.Euler(90, 0, 0));
+        newBullet.GetComponent<Rigidbody>().velocity = SpawnPoint.transform.forward * BulletSpeed;
     }
+
+    void SpawnCartridge()
+    {
+        var tSCP = SpawnCartridgePoint.transform;
+        GameObject newCartridge = Instantiate(CartridgePrefab, tSCP.position, tSCP.rotation * Quaternion.Euler(Random.Range(80, 100), 0, 0));
+        newCartridge.GetComponent<Rigidbody>().velocity = SpawnPoint.transform.right * Random.Range(0.9f, 1.1f);
+    }
+
+    void PlayShotSound()
+    {
+        _audioSource.pitch = Random.Range(0.8f, 1.2f);
+        _audioSource.Play();
+    }
+
+    void PlayEmptyShotSound()
+    {
+        _emptyAudioSource.pitch = Random.Range(0.8f, 1.2f);
+        _emptyAudioSource.Play();
+    }
+
+    public void AddAmmo(int ammo)
+    {
+        _bullets += ammo;
+        OnUIShoot?.Invoke(_bullets);
+    }
+
+    void HideFlash() { Flash.SetActive(false); }
 }

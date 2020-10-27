@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ObjectSpawn : MonoBehaviour
 {
@@ -12,12 +10,8 @@ public class ObjectSpawn : MonoBehaviour
     public float OffsetValue;
     float _period;
 
-    private void Start()
-    {
-        _period = Random.Range(MinSpawnPeriod, MaxSpawnPeriod);
-    }
+    private void Start() { _period = Random.Range(MinSpawnPeriod, MaxSpawnPeriod); }
 
-    // Update is called once per frame
     void Update()
     {
         Timer += Time.deltaTime;

@@ -1,20 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class AmmoScript : MonoBehaviour
 {
-    public Gun gun;
-    public Text text;
-    // Start is called before the first frame update
-    void Start()
-    {
-        gun.OnShoot += SetAmmo;
-    }
+    public Gun Gun;
+    public Text Text;
 
-    void SetAmmo(int ammo)
-    {
-        text.text = "Ammo: " + ammo;
-    }
+    void Awake() { Gun.OnUIShoot += ShowAmmo; }
+    void ShowAmmo(int ammo) { Text.text = "Ammo: " + ammo; }
 }
